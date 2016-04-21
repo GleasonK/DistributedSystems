@@ -30,6 +30,7 @@ public class CloudServer {
             this.dirtyFiles = new ConcurrentHashMap<String,CloudFile>(this.fileSystem);
             this.fileCandidates = new ConcurrentHashMap<String,List<CloudFile>>();
             this.mcSocket = new MulticastSocket(Config.MULTICAST_PORT_1);
+            this.mcSocket.setInterface(InetAddress.getLocalHost());
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);

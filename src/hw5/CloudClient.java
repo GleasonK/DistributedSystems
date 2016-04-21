@@ -95,6 +95,7 @@ public class CloudClient {
                 ByteArrayInputStream bais = new ByteArrayInputStream(this.packet.getData());
                 ObjectInputStream ois = new ObjectInputStream(bais);
                 ServerInfo serverInfo = (ServerInfo) ois.readObject();
+                serverInfo.ip = rm.ip; // TODO: In distributed env servers would give own. Servers giving localhost here though
                 ois.close();
                 bais.close();
                 executeCommand(serverInfo, data);
