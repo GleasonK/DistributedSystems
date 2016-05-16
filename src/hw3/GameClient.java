@@ -255,7 +255,7 @@ public class GameClient {
 
     public static void main(String[] args) {
         GameClient gc = new GameClient("localhost",GameServer.DEFAULT_PORT);
-//        gc.joinAsPlayer();
-        gc.joinAsKibitzer();
+        gc.joinAsPlayer();
+//        gc.joinAsKibitzer();
     }
 }

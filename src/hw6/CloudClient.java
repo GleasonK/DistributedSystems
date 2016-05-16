@@ -1,10 +1,7 @@
-package hw5;
+package hw6;
 
 import java.io.*;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.Socket;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,6 +17,7 @@ public class CloudClient {
 
     private InetAddress rmAddress;
     private int rmPort;
+
 
     public CloudClient(int port, String addr){
         try {
@@ -81,23 +79,35 @@ public class CloudClient {
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
                 oos.writeObject(data);
                 this.repBuff = baos.toByteArray();
-
-                // TODO: rmPort to middleware port etc
-                int hash = calculateHash((String)data.data);
-                ServerInfo rm = remoteManagers.get(hash % remoteManagers.size());
-                System.out.println("Sending to " + rm.toString());
-                this.packet = new DatagramPacket(this.repBuff, this.repBuff.length, InetAddress.getByName(rm.ip), rm.port);
-                socket.send(this.packet);
                 oos.close();
                 baos.close();
 
-                this.packet = new DatagramPacket(this.recBuff, this.recBuff.length); // Packet came from server thread
-                socket.receive(this.packet);
+                // TODO: rmPort to middleware port etc
+                int hash = calculateHash((String)data.data);
+                boolean ack = false;
+                ServerInfo rm;
+                do {
+                    rm = remoteManagers.get(hash % remoteManagers.size());
+                    System.out.println("Sending to " + rm.toString());
+                    this.packet = new DatagramPacket(this.repBuff, this.repBuff.length, InetAddress.getByName(rm.ip), rm.port);
+                    socket.send(this.packet);
+
+                    try {
+                        this.packet = new DatagramPacket(this.recBuff, this.recBuff.length); // Packet came from server thread
+                        socket.setSoTimeout(2 * 1000);
+                        socket.receive(this.packet);
+                        ack = true;
+                    } catch (SocketTimeoutException e){
+                        hash++;
+                        System.out.println("Connection to RM failed, reconnecting...");
+                    }
+                } while(!ack);
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(this.packet.getData());
                 ObjectInputStream ois = new ObjectInputStream(bais);
                 ServerInfo serverInfo = (ServerInfo) ois.readObject();
                 serverInfo.ip = rm.ip; // TODO: In distributed env servers would give own. Servers giving localhost here though
-                ois.close();
+                ois.close();  // ^^^^ Maybe packet.ip?
                 bais.close();
                 executeCommand(serverInfo, data);
             } catch (IOException | ClassNotFoundException e) {

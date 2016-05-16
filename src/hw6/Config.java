@@ -1,10 +1,10 @@
-package hw5;
+package hw6;
 
 /**
  * Created by GleasonK on 4/10/16.
  */
 public class Config {
-    public static final String REMOTE_MANAGER_IP_1 = "136.167.116.13";
+    public static final String REMOTE_MANAGER_IP_1 = "localhost";
     public static final int REMOTE_MANAGER_PORT_1  = 60010;
 
     public static final String REMOTE_MANAGER_IP_2 = "localhost";
@@ -13,6 +13,10 @@ public class Config {
     public static final String REMOTE_MANAGER_IP_3 = "136.167.117.191";
     public static final int REMOTE_MANAGER_PORT_3  = 60012;
 
+    public static final String RM_MULTICAST_IP = "231.0.8.13";
+    public static final int  RM_MULTICAST_PORT = 8010;
+
+
     public static final long DIRTY_UPDATE_INTERVAL = 15  * 1000;
     public static final long FILE_REQUEST_TIMEOUT  = 8  * 1000;
     public static final long HEARTBEAT_INTERVAL    = 15 * 1000; // 3 second interval
@@ -20,14 +24,15 @@ public class Config {
 
     public static final String FILE_STORE_PATH = "data";
 
-    public static final String MULTICAST_IP_1 = "231.0.8.10";
-    public static final int  MULTICAST_PORT_1 = 8001;
+    public static final String S_MULTICAST_IP_1 = "231.0.8.10";
+    public static final int  S_MULTICAST_PORT_1 = 8001;
 
-    public static final String MULTICAST_IP_2 = "231.0.8.11";
-    public static final int  MULTICAST_PORT_2 = 8002;
+    public static final String S_MULTICAST_IP_2 = "231.0.8.11";
+    public static final int  S_MULTICAST_PORT_2 = 8002;
 
-    public static final String MULTICAST_IP_3 = "231.0.8.12";
-    public static final int  MULTICAST_PORT_3 = 8032;
+    public static final String S_MULTICAST_IP_3 = "231.0.8.12";
+    public static final int  S_MULTICAST_PORT_3 = 8032;
+
 
     public static final int SERVER_PORT_1 = 61001;
     public static final int SERVER_PORT_2 = 61002;
