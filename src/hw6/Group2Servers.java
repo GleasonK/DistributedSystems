@@ -24,42 +24,42 @@ public class Group2Servers {
             }
         }).start();
 
-//        try {Thread.sleep(1000);} catch (InterruptedException e){e.printStackTrace();}
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    new CloudServer(
-//                            Config.SERVER_PORT_5,
-//                            Config.REMOTE_MANAGER_IP_2,
-//                            Config.REMOTE_MANAGER_PORT_2,
-//                            Config.S_MULTICAST_IP_2,
-//                            Config.S_MULTICAST_PORT_2
-//                    ).runServer();
-//                } catch (IOException | ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//
-//        try {Thread.sleep(1000);} catch (InterruptedException e){e.printStackTrace();}
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    new CloudServer(
-//                            Config.SERVER_PORT_6,
-//                            Config.REMOTE_MANAGER_IP_2,
-//                            Config.REMOTE_MANAGER_PORT_2,
-//                            Config.S_MULTICAST_IP_2,
-//                            Config.S_MULTICAST_PORT_2
-//                    ).runServer();
-//                } catch (IOException | ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+        try {Thread.sleep(2400);} catch (InterruptedException e){e.printStackTrace();}
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new CloudServer(
+                            Config.SERVER_PORT_5,
+                            Config.REMOTE_MANAGER_IP_2,
+                            Config.REMOTE_MANAGER_PORT_2,
+                            Config.S_MULTICAST_IP_2,
+                            Config.S_MULTICAST_PORT_2
+                    ).runServer();
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        try {Thread.sleep(2300);} catch (InterruptedException e){e.printStackTrace();}
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new CloudServer(
+                            Config.SERVER_PORT_6,
+                            Config.REMOTE_MANAGER_IP_2,
+                            Config.REMOTE_MANAGER_PORT_2,
+                            Config.S_MULTICAST_IP_2,
+                            Config.S_MULTICAST_PORT_2
+                    ).runServer();
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

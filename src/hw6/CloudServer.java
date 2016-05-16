@@ -144,6 +144,7 @@ public class CloudServer {
                     mcSocket.joinGroup(mcAddress);
                     while (true) {
                         CloudMessage incomingMsg = (CloudMessage) receiveObject();
+                        System.out.println(serverPort + ": MULTICAST_RECEIVE " + incomingMsg.toString());
                         CloudFile cf = (CloudFile) incomingMsg.data;
                         if (cf.getLocation().port == serverPort) continue;
                         switch (incomingMsg.type) {
@@ -162,7 +163,7 @@ public class CloudServer {
                                 ObjectOutputStream oos = new ObjectOutputStream(server.getOutputStream());
                                 oos.writeObject(resp);
                                 oos.flush();
-//                                server.close();
+//                                server.close(); //TODO: Uncomment?
                                 break;
                         }
                     }
@@ -336,7 +337,6 @@ public class CloudServer {
         }
 
         private void handleNewFile(CloudMessage data, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
-            System.out.println("HANDLING NEW FILE " + data.toString());
             if (!(data.data instanceof CloudFile)) return;
             oos.writeObject(data);
             CloudFile cf = (CloudFile) data.data;
@@ -344,11 +344,8 @@ public class CloudServer {
             if (si.ip==null) si.ip = client.getInetAddress().getHostAddress();
             if (fileSystem.containsKey(cf.getName()) && // Old file
                     fileSystem.get(cf.getName()).getNameWithVersion().equals(cf.getNameWithVersion())) return;
-            System.out.println("HANDLING NEW FILE2");
-
             retrieveNewFile(cf);
             System.out.println("HANDLING NEW FILE3");
-
         }
 
         private void responseAll(CloudMessage data, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
@@ -465,18 +462,18 @@ public class CloudServer {
     }
 
     public boolean tryCandidate(CloudFile candidate) throws IOException, ClassNotFoundException{
-        CloudFile oldCf = fileSystem.get(candidate.getName());
         System.out.println("Trying Candidate: " + candidate);
-        if (oldCf==null
-                || !candidate.getNameWithVersion().equals(oldCf.getNameWithVersion())
-                && candidate.getVersion() > oldCf.getVersion()) {// Retreive if diff and newer
-
-            // TODO: Timeout on retrieval to make room for next candidate
-            retrieveFile(candidate);
-            System.out.println("Retrieved - " + candidate.toString());
-            return true;
+        if (candidate==null) return false;
+        synchronized (fileSystem) {
+            if (fileSystem.containsKey(candidate.getName())) {
+                CloudFile oldCf = fileSystem.get(candidate.getName());
+                if (oldCf != null && candidate.getVersion() >= oldCf.getVersion()) return false;
+            }
         }
-        return false;
+
+        retrieveFile(candidate);
+        System.out.println("Retrieved - " + candidate.toString());
+        return true;
     }
 
     public void retrieveFile(CloudFile cf) throws IOException, ClassNotFoundException {

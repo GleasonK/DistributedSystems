@@ -66,6 +66,7 @@ public class RemoteManager {
                         case CloudMessage.CMD_REQUEST_ALL:
                             System.out.println("RM_Request_All");
                             notifyServer(incomingMsg);
+                            break;
                     }
                 }
             } catch (IOException e) {
@@ -98,7 +99,7 @@ public class RemoteManager {
             ServerInfo si=null;
             if (cm.data instanceof CloudFile) {
                 CloudFile cf = (CloudFile) cm.data;
-                ServerInfo location = cf.getLocation();
+                si = cf.getLocation();
             } else {
                 si = (ServerInfo)cm.data;
             }
@@ -165,10 +166,12 @@ public class RemoteManager {
     }
 
     // Add server to list and begin a heartbeat connection
-    // TODO: Uncomment heartbeat thread
-    private void registerServer(ServerInfo serverInfo){
+    private synchronized void registerServer(ServerInfo serverInfo){
+        if (this.servers.isEmpty()) {
+//            fileCache.clear();
+            requestAllFiles(serverInfo);
+        }
         this.servers.add(serverInfo);
-        if (this.servers.size()==1) requestAllFiles(serverInfo);
         Thread t = new Thread(new HeartBeatThread(serverInfo));
         t.start();
     }

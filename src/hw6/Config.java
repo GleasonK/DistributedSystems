@@ -10,7 +10,7 @@ public class Config {
     public static final String REMOTE_MANAGER_IP_2 = "localhost";
     public static final int REMOTE_MANAGER_PORT_2  = 60011;
 
-    public static final String REMOTE_MANAGER_IP_3 = "136.167.117.191";
+    public static final String REMOTE_MANAGER_IP_3 = "localhost";
     public static final int REMOTE_MANAGER_PORT_3  = 60012;
 
     public static final String RM_MULTICAST_IP = "231.0.8.13";

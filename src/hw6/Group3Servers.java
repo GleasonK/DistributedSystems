@@ -5,18 +5,18 @@ import java.io.IOException;
 /**
  * Created by GleasonK on 5/15/16.
  */
-public class Group1Servers {
+public class Group3Servers {
     public static void main(String[] args) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     new CloudServer(
-                            Config.SERVER_PORT_1,
-                            Config.REMOTE_MANAGER_IP_1,
-                            Config.REMOTE_MANAGER_PORT_1,
-                            Config.S_MULTICAST_IP_1,
-                            Config.S_MULTICAST_PORT_1
+                            Config.SERVER_PORT_7,
+                            Config.REMOTE_MANAGER_IP_3,
+                            Config.REMOTE_MANAGER_PORT_3,
+                            Config.S_MULTICAST_IP_3,
+                            Config.S_MULTICAST_PORT_3
                     ).runServer();
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -24,18 +24,18 @@ public class Group1Servers {
             }
         }).start();
 
-        try {Thread.sleep(2500);} catch (InterruptedException e){e.printStackTrace();}
+        try {Thread.sleep(2400);} catch (InterruptedException e){e.printStackTrace();}
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     new CloudServer(
-                            Config.SERVER_PORT_2,
-                            Config.REMOTE_MANAGER_IP_1,
-                            Config.REMOTE_MANAGER_PORT_1,
-                            Config.S_MULTICAST_IP_1,
-                            Config.S_MULTICAST_PORT_1
+                            Config.SERVER_PORT_8,
+                            Config.REMOTE_MANAGER_IP_3,
+                            Config.REMOTE_MANAGER_PORT_3,
+                            Config.S_MULTICAST_IP_3,
+                            Config.S_MULTICAST_PORT_3
                     ).runServer();
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -50,11 +50,11 @@ public class Group1Servers {
             public void run() {
                 try {
                     new CloudServer(
-                            Config.SERVER_PORT_3,
-                            Config.REMOTE_MANAGER_IP_1,
-                            Config.REMOTE_MANAGER_PORT_1,
-                            Config.S_MULTICAST_IP_1,
-                            Config.S_MULTICAST_PORT_1
+                            Config.SERVER_PORT_9,
+                            Config.REMOTE_MANAGER_IP_3,
+                            Config.REMOTE_MANAGER_PORT_3,
+                            Config.S_MULTICAST_IP_3,
+                            Config.S_MULTICAST_PORT_3
                     ).runServer();
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
