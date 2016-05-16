@@ -4,10 +4,10 @@ package hw6;
  * Created by GleasonK on 4/10/16.
  */
 public class Config {
-    public static final String REMOTE_MANAGER_IP_1 = "localhost";
+    public static final String REMOTE_MANAGER_IP_1 = "136.167.116.10";
     public static final int REMOTE_MANAGER_PORT_1  = 60010;
 
-    public static final String REMOTE_MANAGER_IP_2 = "localhost";
+    public static final String REMOTE_MANAGER_IP_2 = "136.167.116.10";
     public static final int REMOTE_MANAGER_PORT_2  = 60011;
 
     public static final String REMOTE_MANAGER_IP_3 = "localhost";
